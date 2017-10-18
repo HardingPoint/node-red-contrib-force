@@ -22,11 +22,18 @@ module.exports = function (RED) {
   function ForceNode(n) {
     RED.nodes.createNode(this, n);
     var node = this;
+
     var credentials = RED.nodes.getCredentials(n.id);
+    if (!credentials){
+        console.log("[Credentials Null]");
+        credentials = this.credentials;
+    }
+    console.log("[Credentials] : " + credentials);
 
     this.login = function (callback, msg) {
-      var accessToken = msg.accessToken || credentials.accessToken;
-      var instanceUrl = msg.instanceUrl || credentials.instanceUrl;
+      var accessToken = process.env.SFDC_ACCESSTOKEN || msg.accessToken || credentials.accessToken;
+      var instanceUrl = process.env.SFDC_INSTANCEURL || msg.instanceUrl || credentials.instanceUrl;
+
       if (n.logintype == "oauth") {
           var error;
           if (!accessToken || !instanceUrl) {
