@@ -24,11 +24,11 @@ module.exports = function (RED) {
     var node = this;
 
     var credentials = RED.nodes.getCredentials(n.id);
+
+    // Backwards Compatible
     if (!credentials){
-        console.log("[Credentials Null]");
         credentials = this.credentials;
     }
-    console.log("[Credentials] : " + credentials);
 
     this.login = function (callback, msg) {
       var accessToken = process.env.SFDC_ACCESSTOKEN || msg.accessToken || credentials.accessToken;
@@ -158,7 +158,6 @@ module.exports = function (RED) {
       });
   });
 
-
   function ForceInNode(n) {
     RED.nodes.createNode(this, n);
     this.force = n.force;
@@ -169,12 +168,17 @@ module.exports = function (RED) {
     if (this.forceConfig) {
       var node = this;
       node.convType = function (payload, targetType) {
-        if (typeof payload !== targetType) {
-          if (targetType == 'string') {
-            payload = JSON.stringify(payload);
-          } else {
-            payload = JSON.parse(payload);
-          }
+        try{
+            if (typeof payload !== targetType) {
+                if (targetType == 'string') {
+                    payload = JSON.stringify(payload);
+                } else {
+                    payload = JSON.parse(payload);
+                }
+            }
+        }catch(err){
+            console.log("[GRAX.io] ForceInNode.convType Exception - " + err);
+            console.log("[GRAX.io] payload : " + JSON.stringify(payload));
         }
         return payload;
       };
