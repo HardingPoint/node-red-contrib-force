@@ -202,8 +202,13 @@ module.exports = function (RED) {
           }
           switch (node.operation) {
             case 'query':
-              msg.payload = node.convType(msg.payload, 'string');
-              conn.query(msg.payload, node.sendMsg);
+              try{
+                  msg.payload = node.convType(msg.payload, 'string');
+                  conn.query(msg.payload, node.sendMsg);
+              }catch(err){
+                  console.log("[GRAX.io] ForceInNode.query Exception - " + err);
+                  console.log("[GRAX.io] ForceInNode.query payload : " + JSON.stringify(msg));
+              }
               break;
             case 'create':
               msg.payload = node.convType(msg.payload, 'object');
