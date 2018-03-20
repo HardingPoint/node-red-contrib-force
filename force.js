@@ -61,7 +61,8 @@ module.exports = function (RED) {
 
           conn.login(n.username, credentials.password, function (err, userInfo) {
             if (err) {
-              error = err;
+                console.log("[GRAX.io] ForceInNode.login Exception - " + err);
+                error = err;
             }
             callback(conn, error);
           });
@@ -243,4 +244,4 @@ module.exports = function (RED) {
   }
   RED.nodes.registerType('force in', ForceInNode);
 
-}
+};
