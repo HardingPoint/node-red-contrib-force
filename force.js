@@ -187,6 +187,7 @@ module.exports = function (RED) {
           if (err) {
             node.error(err.toString());
             node.status({ fill: 'red', shape: 'ring', text: 'failed' });
+            console.log("[GRAX.io] ForceInNode.sendMsg :" + JSON.stringify(msg));
           } else {
             node.status({});
           }
@@ -215,7 +216,6 @@ module.exports = function (RED) {
               break;
             case 'upsert':
                 try{
-                    console.log("[GRAX.io] ForceInNode.upserting");
                     msg.payload = node.convType(msg.payload, 'object');
                     conn.sobject(node.sobject)
                         .upsert(msg.payload, node.extname, node.sendMsg);
