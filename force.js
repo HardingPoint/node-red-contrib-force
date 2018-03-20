@@ -222,7 +222,7 @@ module.exports = function (RED) {
               break;
             case 'upsert':
                 try{
-                    // msg.payload = node.convType(msg.payload, 'object');
+                    msg.payload = node.convType(msg.payload, 'object');
                     conn.sobject(node.sobject)
                         .upsert(msg.payload, node.extname, node.sendMsg);
                 }catch(err){
