@@ -214,9 +214,15 @@ module.exports = function (RED) {
                 .update(msg.payload, node.sendMsg);
               break;
             case 'upsert':
-              msg.payload = node.convType(msg.payload, 'object');
-              conn.sobject(node.sobject)
-                .upsert(msg.payload, node.extname, node.sendMsg);
+                try{
+                    console.log("[GRAX.io] ForceInNode.upserting");
+                    msg.payload = node.convType(msg.payload, 'object');
+                    conn.sobject(node.sobject)
+                        .upsert(msg.payload, node.extname, node.sendMsg);
+                }catch(err){
+                    console.log("[GRAX.io] ForceInNode.upsert Exception - " + err);
+                    console.log("[GRAX.io] payload : " + JSON.stringify(msg));
+                }
               break;
             case 'delete':
               msg.payload = node.convType(msg.payload, 'object');
