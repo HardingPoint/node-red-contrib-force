@@ -192,7 +192,11 @@ module.exports = function (RED) {
           } else {
             node.status({});
           }
-          msg.payload = node.convType(result, 'object');
+          if (result!=null)
+            msg.payload = node.convType(result, 'object');
+          else
+            msg.payload = {};
+
           node.send(msg);
         };
         this.forceConfig.login(function (conn, err) {
