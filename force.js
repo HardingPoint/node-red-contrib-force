@@ -173,7 +173,7 @@ module.exports = function (RED) {
                 if (targetType == 'string') {
                     payload = JSON.stringify(payload);
                 } else {
-                    payload = JSON.parse(JSON.stringify(payload));
+                    payload = JSON.parse(payload);
                 }
             }
         }catch(err){
