@@ -238,8 +238,10 @@ module.exports = function (RED) {
                         console.log("[GRAX.io] msg.payload[node.extname]==null");
                         console.log("[GRAX.io] msg.payload : " + JSON.stringify(msg));
                     }
-                    conn.sobject(node.sobject)
-                        .upsert(msg.payload, node.extname, node.sendMsg);
+                    else if (msg.payload[node.extname]!=null){
+                        conn.sobject(node.sobject)
+                            .upsert(msg.payload, node.extname, node.sendMsg);
+                    }
                 }catch(err){
                     console.log("[GRAX.io] ForceInNode.upsert Exception - " + err);
                     console.log("[GRAX.io] payload : " + JSON.stringify(msg));
