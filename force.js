@@ -189,6 +189,7 @@ module.exports = function (RED) {
             node.error(err.toString());
             node.status({ fill: 'red', shape: 'ring', text: 'failed' });
             console.log("[GRAX.io] ForceInNode.sendMsg (" + err.toString() + "):" + JSON.stringify(msg));
+            console.log("[GRAX.io] ForceInNode.sendMsg result:" + JSON.stringify(result));
           } else {
             node.status({});
           }
