@@ -232,6 +232,12 @@ module.exports = function (RED) {
                         console.log("[GRAX.io] Conversion Failed : " + JSON.stringify(msg));
                     }
 
+                    if (node.extname==null)
+                        console.log("[GRAX.io] node.extname is NULL");
+                    else if (msg.payload[node.extname]==null){
+                        console.log("[GRAX.io] msg.payload[node.extname]==null");
+                        console.log("[GRAX.io] msg.payload : " + JSON.stringify(msg));
+                    }
                     conn.sobject(node.sobject)
                         .upsert(msg.payload, node.extname, node.sendMsg);
                 }catch(err){
